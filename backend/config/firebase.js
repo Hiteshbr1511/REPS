@@ -1,12 +1,15 @@
-import admin from "firebase-admin";
-import fs from "fs";
+import dotenv from "dotenv";
+dotenv.config();
 
-const serviceAccount = JSON.parse(
-  fs.readFileSync(new URL("../serviceAccountKey.json", import.meta.url))
-);
+import admin from "firebase-admin";
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
+// 🔥 FIX PRIVATE KEY FORMAT
+serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
 
 export default admin;

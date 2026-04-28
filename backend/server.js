@@ -1,21 +1,26 @@
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config(); // 🔥 MUST be first
+
+import express from "express";
 import cors from "cors";
+
 import connectDB from "./config/database.js";
+
+// 🔥 Import firebase AFTER dotenv
+import "./config/firebase.js";
+
 import authRoutes from "./routes/authRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
 
-dotenv.config();
-
 const app = express();
-
-
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/students", studentRoutes);
@@ -23,6 +28,9 @@ app.use("/api/attendance", attendanceRoutes);
 
 // DB Connection
 connectDB();
+
+// Debug (you can remove later)
+console.log("ENV CHECK:", process.env.FIREBASE_SERVICE_ACCOUNT ? "LOADED ✅" : "MISSING ❌");
 
 // Test route
 app.get("/", (req, res) => {

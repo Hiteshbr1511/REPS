@@ -30,8 +30,7 @@ app.use("/api/attendance", attendanceRoutes);
 connectDB();
 
 // Debug (you can remove later)
-console.log("ENV CHECK:", process.env.FIREBASE_SERVICE_ACCOUNT ? "LOADED ✅" : "MISSING ❌");
-
+console.log("ENV CHECK:", process.env.MONGO_URI ? "OK" : "MISSING");
 // Test route
 app.get("/", (req, res) => {
   res.send("ERP Backend Running 🚀");

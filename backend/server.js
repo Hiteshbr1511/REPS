@@ -1,14 +1,15 @@
 import dotenv from "dotenv";
-dotenv.config(); // 🔥 MUST be first
+dotenv.config(); // MUST be first
 
 import express from "express";
 import cors from "cors";
 
 import connectDB from "./config/database.js";
 
-// 🔥 Import firebase AFTER dotenv
+// Import firebase AFTER dotenv
 import "./config/firebase.js";
 
+// Routes
 import authRoutes from "./routes/authRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
@@ -20,23 +21,24 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Routes (CLEAN STRUCTURE ✅)
 app.use("/api/auth", authRoutes);
 app.use("/api/test", testRoutes);
-app.use("/api/students", studentRoutes);
+app.use("/api/students", studentRoutes); // 👈 KEEP THIS
 app.use("/api/attendance", attendanceRoutes);
 
 // DB Connection
 connectDB();
 
-// Debug (you can remove later)
-console.log("ENV CHECK:", process.env.MONGO_URI ? "OK" : "MISSING");
-// Test route
+// Health check
 app.get("/", (req, res) => {
   res.send("ERP Backend Running 🚀");
 });
 
-// Server start
+// Debug log
+console.log("ENV CHECK:", process.env.MONGO_URI ? "OK" : "MISSING");
+
+// Start server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

@@ -9,7 +9,10 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/students", authMiddleware, getStudents);
-router.post("/students", authMiddleware, createStudent);
-router.put("/students/:id", authMiddleware, updateStudent);
+// ✅ DO NOT add /students here again
+
+router.get("/", authMiddleware, getStudents);
+router.post("/", authMiddleware, createStudent);
+router.put("/:id", authMiddleware, updateStudent);
+
 export default router;

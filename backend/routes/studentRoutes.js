@@ -11,6 +11,5 @@ const router = express.Router();
 
 router.get("/students", authMiddleware, getStudents);
 router.post("/students", authMiddleware, createStudent);
-router.put("/students/69f48260b636e80bb5a40f5b", authMiddleware, updateStudent);
-
+router.put("/students/:id", authMiddleware, updateStudent);
 export default router;

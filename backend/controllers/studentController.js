@@ -57,3 +57,12 @@ export const updateStudent = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+export const createStudent = async (req, res) => {
+  try {
+    const student = new Student(req.body);
+    await student.save();
+    res.status(201).json(student);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};

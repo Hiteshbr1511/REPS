@@ -1,26 +1,40 @@
-import { useEffect } from "react";
-import { generateToken } from "./firebase";
-import axios from "axios";
+import { Routes, Route } from "react-router-dom";
+import Login from "./components/loginpage";
+import Students from "./components/Students";
+import { FaBook, FaPen, FaGraduationCap } from "react-icons/fa";
+import "./App.css"; // Import the CSS file
 
 function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/students" element={<Students />} />
+    </Routes>
+  );
+}
+
+export function FloatingIcons() {
+  return (
+    <>
+      <FaBook className="float book" />
+      <FaPen className="float pen" />
+      <FaGraduationCap className="float cap" />
+    </>
+  );
+}
+
+export function CursorEffect() {
   useEffect(() => {
-    const sendToken = async () => {
-      const token = await generateToken();
-
-      if (token) {
-        await axios.put(
-          "http://localhost:5000/api/students/69eb46ec2db6dc572a79a598/save-token",
-          { deviceToken: token }
-        );
-
-        console.log("✅ Token saved to backend");
-      }
+    const move = (e) => {
+      document.body.style.backgroundPosition =
+        `${e.clientX / 20}px ${e.clientY / 20}px`;
     };
 
-    sendToken();
+    window.addEventListener("mousemove", move);
+    return () => window.removeEventListener("mousemove", move);
   }, []);
 
-  return <h1>ERP Running 🚀</h1>;
+  return null;
 }
 
 export default App;
